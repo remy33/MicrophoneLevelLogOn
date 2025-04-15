@@ -1,10 +1,10 @@
 [CmdletBinding(SupportsShouldProcess)]
 param (
-    [Parameter(Mandatory=$false)]
-    [ValidateRange(0,100)]
-    [int]$DefaultVolume = -1,
+    [Parameter(Mandatory = $false)]
+    [ValidateRange(0, 100)]
+    [int]$DefaultVolume = 100,
 
-    [Parameter(Mandatory=$false)]
+    [Parameter(Mandatory = $false)]
     [switch]$Help
 )
 
@@ -21,7 +21,7 @@ Usage:
 
 Parameters:
     -DefaultVolume <0-100>
-        Sets the target volume level (0-100%). If not specified, uses current volume.
+        Sets the target volume level (0-100%). If not specified, 100.
     
     -Help
         Shows this help message.
@@ -66,7 +66,7 @@ function Set-MicrophoneVolume {
     [CmdletBinding(SupportsShouldProcess)]
     param (
         [Parameter(Mandatory)]
-        [ValidateRange(0,100)]
+        [ValidateRange(0, 100)]
         [int]$Volume
     )
     try {
@@ -107,16 +107,7 @@ if ($DefaultVolume -eq -1) {
 }
 
 Write-Output "Starting microphone volume monitor. Default volume: $DefaultVolume%"
-Write-Output "Press Ctrl+C to stop monitoring"
 
-# Main monitoring loop
-while ($true) {
-    $currentVolume = Get-MicrophoneVolume
-
-    if ($null -ne $currentVolume -and $currentVolume -ne $DefaultVolume) {
-        Write-Verbose "Volume changed to $currentVolume%. Resetting to $DefaultVolume%..."
-        Set-MicrophoneVolume -Volume $DefaultVolume
-    }
-
-    Start-Sleep -Milliseconds 500
-}
+Write-Output "Volume resetting to $DefaultVolume%..."
+Set-MicrophoneVolume -Volume $DefaultVolume
+Write-Output "Volume set to $DefaultVolume% successfully."

@@ -1,16 +1,19 @@
+[Clumsily Forked from](https://github.com/Vortiago/MicrophoneLevelGuard)
+
 # MicrophoneLevelGuard
 
-A PowerShell script that guards and maintains your microphone's volume at a specified level. This is useful when certain applications or system events unexpectedly change your microphone volume.
+A PowerShell script that set your microphone's volume at a specified level. This is useful when certain applications or system events unexpectedly change your microphone volume.
+Run it every system login.
 
 ## Features
 
-- Automatically restores volume to desired level when changes are detected
-- Includes WhatIf support for testing
+-   Automatically restores volume to desired level when script runs
+-   Includes WhatIf support for testing
 
 ## Requirements
 
-- Windows PowerShell or PowerShell Core
-- AudioDeviceCmdlets PowerShell module (automatically installed if missing)
+-   Windows PowerShell or PowerShell Core
+-   AudioDeviceCmdlets PowerShell module (automatically installed if missing)
 
 ## Installation
 
@@ -20,15 +23,22 @@ A PowerShell script that guards and maintains your microphone's volume at a spec
 git clone https://github.com/Vortiago/MicrophoneLevelGuard.git
 ```
 
-1. Navigate to the script directory:
+2. Navigate to the script directory:
 
 ```powershell
 cd MicrophoneLevelGuard
 ```
 
+3. Run the install script to install script on log in with Task Scheduler,
+   Right click and choose "Run with PowerShell" or run the following command:
+
+```
+ powershell.exe .\Install.ps1
+```
+
 ## Usage
 
-Run the script with default settings (maintains current volume level):
+Run the script with default settings will set volume to 100%:
 
 ```powershell
 .\MicrophoneLevelGuard.ps1
@@ -60,16 +70,14 @@ View help and usage information:
 
 ## Parameters
 
-- `-DefaultVolume <0-100>`: Sets the target volume level (0-100%). If not specified, uses current volume.
-- `-Help`: Shows the help message with usage instructions.
-- `-Verbose`: Shows detailed progress messages.
-- `-WhatIf`: Shows what changes would be made without actually making them.
+-   `-DefaultVolume <0-100>`: Sets the target volume level (0-100%). If not specified, uses current volume.
+-   `-Help`: Shows the help message with usage instructions.
+-   `-Verbose`: Shows detailed progress messages.
+-   `-WhatIf`: Shows what changes would be made without actually making them.
 
 ## How It Works
 
-The script runs in a continuous loop, checking the microphone volume every 500 milliseconds. If it detects that the volume has changed from the specified level, it automatically restores it to the desired value.
-
-When started, it displays a list of all available input devices, highlighting the current default device. The script will continue running until interrupted with Ctrl+C.
+When started, it displays a list of all available input devices, highlighting the current default device.
 
 ## Troubleshooting
 
